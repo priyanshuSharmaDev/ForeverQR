@@ -12,3 +12,12 @@
     -10px 0;
   background-size: 20px 20px;
 }
+
+.qr-preview-output,
+.qr-preview-output > canvas,
+.qr-preview-output > svg {
+  display: block;
+  max-width: 100%;
+  width: 100% !important;
+  height: 100% !important;
+}

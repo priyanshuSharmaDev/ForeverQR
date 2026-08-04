@@ -27,8 +27,8 @@ export function QRGenerator({ contentType = "url" }: { contentType?: QRContentTy
   }, [config, content.value, setRecent]);
 
   return (
-    <section id="generator" className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_430px]">
-      <div className="grid gap-6">
+    <section id="generator" className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,430px)]">
+      <div className="grid min-w-0 gap-6">
         <AdSlot placement="Above QR generator on mobile" minHeight={90} className="lg:hidden" />
         <QRControls
           config={config}
@@ -52,7 +52,7 @@ export function QRGenerator({ contentType = "url" }: { contentType?: QRContentTy
           onClear={() => setRecent([])}
         />
       </div>
-      <div>
+      <div className="min-w-0">
         <QRPreview config={config} data={content.value} />
         <AdSlot placement="Right sidebar" minHeight={250} className="hidden xl:block" />
       </div>

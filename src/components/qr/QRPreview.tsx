@@ -5,6 +5,8 @@ import type { QRConfig } from "../../types/qr";
 import { Button } from "../common/Button";
 import { ContrastWarning } from "./ContrastWarning";
 
+const previewSize = 320;
+
 export function createQROptions(config: QRConfig, data: string) {
   return {
     width: config.width,
@@ -37,22 +39,32 @@ export function QRPreview({ config, data }: { config: QRConfig; data: string }) 
   const qr = useRef<QRCodeStyling>();
   const [zoom, setZoom] = useState(1);
   const options = useMemo(() => createQROptions(config, data || "https://example.com"), [config, data]);
+  const previewOptions = useMemo(
+    () => ({
+      ...options,
+      width: previewSize,
+      height: previewSize
+    }),
+    [options]
+  );
 
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
     element.innerHTML = "";
-    qr.current = new QRCodeStyling(options);
+    qr.current = new QRCodeStyling(previewOptions);
     qr.current.append(element);
     return () => {
       element.innerHTML = "";
     };
-  }, [options]);
+  }, [previewOptions]);
 
   return (
-    <section aria-label="QR preview" className="sticky top-24 grid gap-4 rounded-lg border border-border bg-white p-4 shadow-soft">
-      <div className={`grid place-items-center overflow-auto rounded-lg p-4 ${config.transparentBackground ? "checkerboard" : "bg-surface-muted"}`}>
-        <div ref={ref} aria-label="Generated QR code" style={{ transform: `scale(${zoom})`, transformOrigin: "center" }} />
+    <section aria-label="QR preview" className="grid min-w-0 gap-4 rounded-lg border border-border bg-white p-4 shadow-soft lg:sticky lg:top-24">
+      <div className={`grid min-w-0 place-items-center overflow-hidden rounded-lg p-4 ${config.transparentBackground ? "checkerboard" : "bg-surface-muted"}`}>
+        <div className="aspect-square w-full max-w-80">
+          <div ref={ref} aria-label="Generated QR code" className="qr-preview-output h-full w-full" style={{ transform: `scale(${zoom})`, transformOrigin: "center" }} />
+        </div>
       </div>
       {config.frame.enabled ? (
         <div className="rounded-lg border p-3 text-center" style={{ borderColor: config.frame.frameColor, background: config.frame.backgroundColor, borderRadius: config.frame.borderRadius / 4 }}>
