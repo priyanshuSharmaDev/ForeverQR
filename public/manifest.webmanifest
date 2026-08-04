@@ -1,0 +1,10 @@
+{
+  "name": "Forever QR",
+  "short_name": "Forever QR",
+  "description": "Free custom QR code generator with logo, frame, PNG, and SVG downloads.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F6F8FC",
+  "theme_color": "#155EEF",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
